@@ -1,4 +1,4 @@
-# Laboratorio 11: Pila ELK
+E# Laboratorio 11: Pila ELK
 
 ## Preparar el entorno:
 
@@ -127,7 +127,7 @@ sudo nano logstash.conf
     }
     output{
         elasticsearch{
-            hosts => ["34.38.180.70:9200"]
+            hosts => ["IP_QUE-RECIBE:9200"]
             index => "logs-filebeat"
         }
     }
