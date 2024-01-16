@@ -95,11 +95,20 @@ sudo dpkg -i filebeat-8.11.1-amd64.deb
 # Configurar Filebeat
 sudo nano /etc/filebeat/filebeat.yml
 
+# Hay que cambiar estas dos cosas:
+# 1. Comentar la línea “output.elasticsearch” y las indentadas inmediatamente debajo, para evitar conexiones
+directas a Elasticsearch.
+# 2. Descomentar la línea “output.logstash” y la línea “hosts” que se encuentra de inmediatamente después. Se
+debe editar la línea hosts para incluir la dirección del servicio Logstash en formato <IP_A DONDE QUIERES IR>:<PUERTO>
+
+# Listar los logs que puede monitorizar y recopilar filebeat
 sudo filebeat modules list
 
+# Activar la monitorizaion de los logs del sistema
 sudo filebeat modules enable system
 
-# Configurar system.yml
+# Configurar system.yml. En este fichero, se deben cambiar los valores “enabled: false”
+a “enabled: true” para los apartados syslog y auth
 sudo nano /etc/filebeat/modules.d/system.yml
 
 # Iniciar Filebeat
@@ -118,7 +127,7 @@ sudo nano logstash.conf
     }
     output{
         elasticsearch{
-            hosts => ["http://elasticsearch:9200"]
+            hosts => ["34.38.180.70:9200"]
             index => "logs-filebeat"
         }
     }
